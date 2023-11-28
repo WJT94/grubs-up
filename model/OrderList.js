@@ -21,8 +21,8 @@ class OrderList extends Database {
     }
   }
 
-  addOrder(customerId, time, parts, status) {
-    const newOrder = new Order(this.nextOrderId++, customerId, time, parts, status);
+  addOrder(customerId, time, address, parts, status) {
+    const newOrder = new Order(this.nextOrderId++, customerId, time, address, parts, status);
     this.orders.push(newOrder);
     this.setValue('nextOrderId', this.nextOrderId);
     this.setValue('orders', this.orders);
