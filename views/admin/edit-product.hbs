@@ -1,0 +1,23 @@
+<div class="container-fluid center">
+  <div class="row">
+    <div class="center-container text-light">
+      <h1>{{pageTitle}} {{product.name}}</h1>
+
+      <form method="POST" action="/admin/edit-product/{{product.id}}">
+        <label for="name">Name:</label><br>
+        <input type="text" name="name" value="{{product.name}}" required>
+        <br>
+
+        <label for="description">Description:</label><br>
+        <textarea name="description" required>{{product.description}}</textarea>
+        <br>
+
+        <label for="price">Price:</label><br>
+        <input type="number" name="price" value="{{product.price}}" step="0.01" required>
+        <br>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>

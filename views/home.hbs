@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="home-header">
+    <div class="center-container text-light">
+      <h1 class="fadeIn up" style="--delay: .6s">GrubsUp</h1>
+      <p class="fadeIn up" style="--delay: 0.45s">By Litva Kebabs</p>
+      <h3 class="fadeIn up" style="--delay: 0.3s"><a href="/customer/login" class="btn">🥙 Dig in</a></h3>
+      <h3 class="fadeIn up" style="--delay: 0.15s"><a href="/admin/login" class="btn">🔑 Staff Login</a></h3>
+    </div>
+    <a class="next-button" href="#menu">
+      <i class="fa-solid fa-chevron-down"></i>
+      View our Menu
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </div>
+  <div class="d-flex row text-white text-center" id="menu">
+    <h2>Menu</h2>
+{{#each products}}
+  <div class="col-4 fadeIn left">
+    <h3>{{name}}</h3>
+    <p>{{description}}</p>
+    <p>Price: £{{price}}</p>
+  </div>
+{{/each}}
+  </div>
+</div>

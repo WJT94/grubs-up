@@ -1,0 +1,179 @@
+:root {
+  --easing: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(to left, #0f0c29, #302b63, #24243e);
+  color: white;
+}
+
+.center-container {
+  text-align: center;
+}
+
+h1,
+h3,
+p {
+  margin: 0;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+p.small {
+  margin-bottom: 2px;
+}
+
+.vertpad {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+a.btn,
+form button {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  /* Text color */
+  background-color: transparent;
+  /* Transparent background */
+  border: 2px solid #fff;
+  /* White border */
+  border-radius: 5px;
+  /* Slightly-rounded border */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+a.btn:hover,
+form button:hover {
+  background-color: #fff;
+  /* Hover background color */
+  color: #111;
+  /* Hover text color */
+}
+
+form input {
+  margin-bottom: 5px;
+}
+
+/* FANCY TABLE START */
+.fancytable tr td,
+.fancytable tr th {
+  padding: 2.5px 10px;
+}
+
+.fancytable tbody tr:hover {
+  background: rgba(0,0,0,0.5);
+}
+
+/* FANCY TABLE END */
+
+
+/* FADE EFFECTS START */
+@keyframes fadeFromAbove {
+  from {
+    opacity: 0;
+    transform: translateY(max(-50vh, -250px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(max(-50vw, -250px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(min(50vw, 250px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeNeutral {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeNeutral 1s var(--easing) var(--delay, 0s) forwards;
+}
+
+.fadeIn.up {
+  animation: fadeFromAbove 1s var(--easing) var(--delay, 0s) forwards;
+}
+
+.fadeIn.left {
+  animation: fadeFromLeft 1s var(--easing) var(--delay, 0s) forwards;
+}
+
+.fadeIn.right {
+  animation: fadeFromRight 1s var(--easing) var(--delay, 0s) forwards;
+}
+
+/* FADE EFFECTS END */
+
+/* HOME HEADER START */
+.home-header {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a.next-button {
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  bottom: 50px;
+}
+
+a.next-button:hover i:first-child {
+  margin-right: 15px;
+}
+
+a.next-button:hover i:last-child {
+  margin-left: 15px;
+}
+
+a.next-button i {
+  transition: all 0.25s ease;
+}
+
+/* HOME HEADER END */
+
+/* TABLE START */
+table {
+  width: 100%;
+}
+/* TABLE END */

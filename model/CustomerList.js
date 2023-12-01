@@ -69,4 +69,6 @@ class CustomerList extends Database {
   }
 }
 
-module.exports = CustomerList;
+const customerDbFilePath = './db/customers.json';
+const instance = new CustomerList(customerDbFilePath);
+module.exports = instance;

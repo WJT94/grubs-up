@@ -5,19 +5,27 @@ const Extra = require('./Extra');
 class ExtraList extends Database {
   constructor(dbFilePath) {
     super(dbFilePath);
-    const dbData = this.readDatabase();
-    this.extras = dbData.extras || [];
-    this.nextExtraId = dbData.nextExtraId || 1;
 
-    // Ensure "extras" key is initialized in the database
-    if (!dbData.hasOwnProperty('extras')) {
-      this.writeDatabase({ extras: [], nextExtraId: this.nextExtraId });
+    if (!ExtraList.instance) {
+      ExtraList.instance = this;
+      this.initialize();
     }
 
-    // Ensure "nextExtraId" key is initialized in the database
-    if (!dbData.hasOwnProperty('nextExtraId')) {
-      this.nextExtraId = 1;
-      this.writeDatabase({ ...dbData, nextExtraId: this.nextExtraId });
+    return ExtraList.instance;
+  }
+
+  initialize() {
+    const dbData = this.readDatabase();
+    // Ensure "extras" and "nextExtraId" keys are initialized in the database
+    if (!dbData.hasOwnProperty('extras') || !dbData.hasOwnProperty('nextExtraId')) {
+      this.writeDatabase({ extras: [], nextExtraId: 1 });
+      // Re-read the database after initializing to get the correct values
+      const updatedData = this.readDatabase();
+      this.extras = updatedData.extras || [];
+      this.nextExtraId = updatedData.nextExtraId || 1;
+    } else {
+      this.extras = dbData.extras;
+      this.nextExtraId = dbData.nextExtraId;
     }
   }
 
@@ -71,4 +79,6 @@ class ExtraList extends Database {
   }
 }
 
-module.exports = ExtraList;
+const extraDbFilePath = './db/extras.json';
+const instance = new ExtraList(extraDbFilePath);
+module.exports = instance;

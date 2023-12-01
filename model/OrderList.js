@@ -5,19 +5,27 @@ const Order = require('./Order');
 class OrderList extends Database {
   constructor(dbFilePath) {
     super(dbFilePath);
-    const dbData = this.readDatabase();
-    this.orders = dbData.orders || [];
-    this.nextOrderId = dbData.nextOrderId || 1;
 
-    // Ensure "orders" key is initialised in the database
-    if (!dbData.hasOwnProperty('orders')) {
-      this.writeDatabase({ orders: [], nextOrderId: this.nextOrderId });
+    if (!OrderList.instance) {
+      OrderList.instance = this;
+      this.initialize();
     }
 
-    // Ensure "nextOrderId" key is initialised in the database
-    if (!dbData.hasOwnProperty('nextOrderId')) {
-      this.nextOrderId = 1;
-      this.writeDatabase({ ...dbData, nextOrderId: this.nextOrderId });
+    return OrderList.instance;
+  }
+
+  initialize() {
+    const dbData = this.readDatabase();
+    // Ensure "orders" and "nextOrderId" keys are initialized in the database
+    if (!dbData.hasOwnProperty('orders') || !dbData.hasOwnProperty('nextOrderId')) {
+      this.writeDatabase({ orders: [], nextOrderId: 1 });
+      // Re-read the database after initializing to get the correct values
+      const updatedData = this.readDatabase();
+      this.orders = updatedData.orders || [];
+      this.nextOrderId = updatedData.nextOrderId || 1;
+    } else {
+      this.orders = dbData.orders;
+      this.nextOrderId = dbData.nextOrderId;
     }
   }
 
@@ -58,4 +66,6 @@ class OrderList extends Database {
   }
 }
 
-module.exports = OrderList;
+const orderDbFilePath = './db/orders.json';
+const instance = new OrderList(orderDbFilePath);
+module.exports = instance;

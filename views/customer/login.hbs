@@ -1,0 +1,24 @@
+<div class="container-fluid center">
+  <div class="row">
+    <div class="center-container text-light">
+      <h1>Customer Login</h1>
+      <form action="/customer/login" method="post">
+        <div class="row">
+          <div class="col-xs-12">
+            <label for="email">Email:</label><br><input type="email" name="email" required>
+            <br>
+            <label for="password">Password:</label><br><input type="password" name="password" required>
+            <br>
+            <button type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+      <div class="row center-container">
+        <div class="col align-self-center vertpad">
+          <p class="small">Not a member yet?</p>
+          <a class="btn" href="/customer/register">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

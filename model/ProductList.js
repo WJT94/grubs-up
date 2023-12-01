@@ -5,8 +5,17 @@ const Product = require('./Product');
 class ProductList extends Database {
   constructor(dbFilePath) {
     super(dbFilePath);
-    const dbData = this.readDatabase();
 
+    if (!ProductList.instance) {
+      ProductList.instance = this;
+      this.initialize();
+    }
+
+    return ProductList.instance;
+  }
+
+  initialize() {
+    const dbData = this.readDatabase();
     // Ensure "products" and "nextProductId" keys are initialized in the database
     if (!dbData.hasOwnProperty('products') || !dbData.hasOwnProperty('nextProductId')) {
       this.writeDatabase({ products: [], nextProductId: 1 });
@@ -63,8 +72,8 @@ class ProductList extends Database {
   getProductByName(name) {
     return this.products.find(product => product.name === name) || null;
   }
-
-
 }
 
-module.exports = ProductList;
+const productDbFilePath = './db/products.json';
+const instance = new ProductList(productDbFilePath);
+module.exports = instance;

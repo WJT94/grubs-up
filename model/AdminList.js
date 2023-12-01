@@ -69,4 +69,6 @@ class AdminList extends Database {
   }
 }
 
-module.exports = AdminList;
+const adminDbFilePath = './db/admins.json';
+const instance = new AdminList(adminDbFilePath);
+module.exports = instance;

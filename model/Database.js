@@ -1,9 +1,17 @@
 // /model/Database.js
 const fs = require('fs');
+const path = require('path');
 
 class Database {
   constructor(dbFilePath) {
     this.dbFilePath = dbFilePath;
+  }
+
+  ensureDirectoryExists() {
+    const directory = path.dirname(this.dbFilePath);
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory, { recursive: true });
+    }
   }
 
   readDatabase() {
@@ -17,6 +25,7 @@ class Database {
   }
 
   writeDatabase(data) {
+    this.ensureDirectoryExists();
     fs.writeFileSync(this.dbFilePath, JSON.stringify(data, null, 2), 'utf8');
   }
 
