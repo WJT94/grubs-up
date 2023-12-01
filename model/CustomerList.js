@@ -67,6 +67,16 @@ class CustomerList extends Database {
   getCustomerByEmail(email) {
     return this.customers.find(customer => customer.email === email) || null;
   }
+
+  addCustomerOrder(customerId, orderId) {
+    const customerToUpdate = this.customers.find(customer => customer.id === customerId);
+
+    if (customerToUpdate) {
+      console.log(customerToUpdate);
+    } else {
+      error("No Customer found with an ID of", customerId);
+    }
+  }
 }
 
 const customerDbFilePath = './db/customers.json';

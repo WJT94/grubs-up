@@ -8,14 +8,7 @@ const customerList = require('./model/CustomerList');
 const adminList = require('./model/AdminList');
 const productList = require('./model/ProductList');
 const orderList = require('./model/OrderList');
-const extraLIst = require('./model/ExtraList');
-
-
-// Database file paths in the /db/ folder
-
-const adminDbFilePath = './db/admins.json';
-const productDbFilePath = './db/products.json';
-const orderDbFilePath = './db/orders.json';
+const extraList = require('./model/ExtraList');
 
 
 // Initialise Express
@@ -59,3 +52,5 @@ app.get('/logout', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
+
+console.log(orderList.getTotalPrice(1));

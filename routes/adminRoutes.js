@@ -1,6 +1,7 @@
 
 const adminList = require('../model/AdminList');
 const productList = require("../model/ProductList");
+const orderList = require('../model/OrderList');
 
 module.exports = function (app) {
 
@@ -26,8 +27,6 @@ module.exports = function (app) {
   });
 
   app.post('/admin/register', (req, res) => {
-    console.log(adminList);
-    console.log(req.body);
     const { name, email, password } = req.body;
 
 
@@ -46,9 +45,9 @@ module.exports = function (app) {
   app.get('/admin/dashboard', (req, res) => {
     const admin = req.session.admin;
     const products = productList.getProducts();
+    const orders = orderList.getLiveOrders();
     if (admin) {
-      console.log(req.session.admin);
-      res.render('admin/dashboard', { pageTitle: 'Admin Dashboard', layout: 'layout', products: products })
+      res.render('admin/dashboard', { pageTitle: 'Admin Dashboard', layout: 'layout', products: products, orders: orders })
     } else {
       res.redirect('/admin/login');
     }
@@ -62,13 +61,11 @@ module.exports = function (app) {
       const product = productList.getProductById(productId);
 
       res.render('admin/edit-product', { product, pageTitle: 'Edit Product', layout: 'layout' });
-      console.log(req.session.admin);
     }
   });
 
   // Define a route to handle the form submission for editing a product
   app.post('/admin/edit-product/:id', (req, res) => {
-    console.log(req.session.admin);
     if (req.session.admin) {
       const productId = Number(req.params.id);
       const updatedProduct = {

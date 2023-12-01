@@ -1,5 +1,6 @@
 const customerList = require('../model/CustomerList');
 const productList = require('../model/ProductList');
+const orderList = require('../model/OrderList');
 
 module.exports = function (app) {
 
@@ -25,8 +26,6 @@ module.exports = function (app) {
   });
 
   app.post('/customer/register', (req, res) => {
-    console.log(customerList);
-    console.log(req.body);
     const { name, email, password } = req.body;
 
 

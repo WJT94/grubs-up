@@ -7,7 +7,7 @@
   </nav>
 
   <main class="text-light">
-    <!-- Main content area for admin actions -->
+    <!-- Main content area for product actions -->
     <section class="vertpad col-6">
       <!-- Display all products in a table -->
       <h2>All Products</h2>
@@ -32,7 +32,7 @@
             <td>
               <!-- Action buttons for each product -->
               <a class="btn" href="/admin/edit-product/{{id}}">Edit</a>
-              <a class="btn" href="/admin/delete-product/{{id}}" onclick="return confirm('Are you sure?')">Delete</a>
+              <a class="btn red" href="/admin/delete-product/{{id}}" onclick="return confirm('Are you sure?')">Delete</a>
             </td>
           </tr>
           {{/each}}
@@ -40,5 +40,5 @@
       </table>
     </section>
 
-    <!-- Add, edit, or delete product forms can be added here based on admin actions -->
+    
   </main>
