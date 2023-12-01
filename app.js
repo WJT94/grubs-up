@@ -37,6 +37,9 @@ app.use(session({
   secret: 'your-secret-key',
   resave: true,
   saveUninitialized: true,
+  cookie: {
+    maxAge: 3600000
+  },
   store: new session.MemoryStore()
  }));
 

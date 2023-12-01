@@ -47,6 +47,7 @@ module.exports = function (app) {
     const admin = req.session.admin;
     const products = productList.getProducts();
     if (admin) {
+      console.log(req.session.admin);
       res.render('admin/dashboard', { pageTitle: 'Admin Dashboard', layout: 'layout', products: products })
     } else {
       res.redirect('/admin/login');
@@ -61,22 +62,26 @@ module.exports = function (app) {
       const product = productList.getProductById(productId);
 
       res.render('admin/edit-product', { product, pageTitle: 'Edit Product', layout: 'layout' });
+      console.log(req.session.admin);
     }
   });
 
   // Define a route to handle the form submission for editing a product
   app.post('/admin/edit-product/:id', (req, res) => {
-    const productId = Number(req.params.id);
-    const updatedProduct = {
-      name: req.body.name,
-      description: req.body.description,
-      price: parseFloat(req.body.price),
-    };
+    console.log(req.session.admin);
+    if (req.session.admin) {
+      const productId = Number(req.params.id);
+      const updatedProduct = {
+        name: req.body.name,
+        description: req.body.description,
+        price: parseFloat(req.body.price),
+      };
 
-    productList.updateProduct(productId, updatedProduct);
+      productList.updateProduct(productId, updatedProduct);
 
-    // Redirect back to the dashboard
-    res.redirect('/admin/dashboard');
+      // Redirect back to the dashboard
+      res.redirect('/admin/dashboard');
+    }
   });
 
 
@@ -107,7 +112,7 @@ module.exports = function (app) {
 
       productList.deleteProduct(productId);
     }
-    
+
     res.redirect('/admin/dashboard');
   });
 };
