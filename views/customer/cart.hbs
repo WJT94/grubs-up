@@ -1,0 +1,37 @@
+<div class="row vertpad">
+  <div class="center-container text-light">
+    <h1>Your Cart</h1>
+    <a class="btn" href="/customer/dashboard">Dashboard</a>
+    <a class="btn" href="/logout">Logout</a>
+  </div>
+</div>
+<div class="row text-white text-center vertpad" id="menu">
+  <h2>Cart</h2>
+  {{#each products}}
+  <div class="col-4">
+    <h3>{{name}}</h3>
+    <p>Quantity: {{quantity}}</p>
+    <p>Price: £{{price}}</p>
+    <form method="POST" action="/addToCart">
+      <input type="hidden" name="productId" value="{{id}}">
+      <button type="submit">Add Another</button>
+    </form>
+    <form method="POST" action="/removeFromCart">
+      <input type="hidden" name="productId" value="{{id}}">
+      <button type="submit">Remove</button>
+    </form>
+  </div>
+  {{/each}}
+</div>
+{{#if hasOrder}}
+<div class="row text-white text-center vertpad">
+  <h2>All Set?</h2>
+  <form action="/place-order" method="post">
+    <label for="address">Delivery Address:</label>
+    <br>
+    <input type="text" id="address" name="address" required>
+    <br>
+    <button type="submit">Place Order</button>
+  </form>
+</div>
+{{/if}}

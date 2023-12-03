@@ -2,15 +2,16 @@
     <!-- Navigation links for different admin actions -->
     <div class="text-light vertpad">
       <h1>Staff Dashboard</h1>
-      <a class="btn" href="/admin/add-product">Add New Product</a>
+      <a class="btn" href="/logout">Logout</a>
     </div>
   </nav>
 
   <main class="text-light">
     <!-- Main content area for product actions -->
-    <section class="vertpad col-6">
+    <section class="vertpad horpad col-12">
       <!-- Display all products in a table -->
       <h2>All Products</h2>
+      <a class="btn" href="/admin/add-product">Add New Product</a>
       <table class="fancytable">
         <thead>
           <tr>
@@ -33,6 +34,44 @@
               <!-- Action buttons for each product -->
               <a class="btn" href="/admin/edit-product/{{id}}">Edit</a>
               <a class="btn red" href="/admin/delete-product/{{id}}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="vertpad horpad col-12">
+      <!-- Display all products in a table -->
+      <h2>Active Orders</h2>
+      <table class="fancytable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Time</th>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>Order</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through products and display each row -->
+          {{#each order}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{address}}</td>
+            <td>{{#each part}}
+              <p>{{quantity}}x {{name}}: £{{subtotal}}</p>
+              {{/each}}
+            </td>
+            <td>£{{total}}</td>
+            <td>
+              <!-- Action buttons for each product -->
+              <a class="btn" href="/admin/complete-order/{{id}}">Complete Order</a>
+              <a class="btn red" href="/admin/cancel-order/{{id}}" onclick="return confirm('Are you sure?')">Cancel Order</a>
             </td>
           </tr>
           {{/each}}

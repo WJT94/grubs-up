@@ -1,3 +1,5 @@
+const Cart = require('./Cart');
+
 class Customer {
     constructor(id, name, email, password) {
         this.id = id;
@@ -5,6 +7,7 @@ class Customer {
         this.email = email;
         this.password = password;
         this.orders = {};
+        this.cart = new Cart();
     }
 
     

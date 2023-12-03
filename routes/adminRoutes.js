@@ -45,9 +45,36 @@ module.exports = function (app) {
   app.get('/admin/dashboard', (req, res) => {
     const admin = req.session.admin;
     const products = productList.getProducts();
-    const orders = orderList.getLiveOrders();
+
+    const liveOrders = orderList.getLiveOrders();
+
+    // Prepare an array of objects for the Handlebars template
+    const ordersArray = liveOrders.map(order => {
+      const partsArray = order.parts.map(part => {
+        const product = productList.getProductById(part[0]);
+        return {
+          name: product.name,
+          quantity: part[1],
+          subtotal: product.price * part[1],
+        };
+      });
+
+      const total = partsArray.reduce((acc, part) => acc + part.subtotal, 0);
+
+      return {
+        id: order.id,
+        name: order.name,
+        customer: {
+          name: order.customer.name,
+        },
+        address: order.address,
+        parts: partsArray,
+        total: total,
+      };
+    });
+
     if (admin) {
-      res.render('admin/dashboard', { pageTitle: 'Admin Dashboard', layout: 'layout', products: products, orders: orders })
+      res.render('admin/dashboard', { pageTitle: 'Admin Dashboard', layout: 'layout', products: products, orders: ordersArray })
     } else {
       res.redirect('/admin/login');
     }

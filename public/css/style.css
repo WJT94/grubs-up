@@ -36,6 +36,11 @@ p.small {
   padding-bottom: 15px;
 }
 
+.horpad {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 a.btn,
 form button {
   display: inline-block;

@@ -51,19 +51,44 @@ module.exports = function (app) {
     }
   });
 
-  app.get('/addToCart'), (req, res) => {
+  app.get('/customer/cart', (req, res) => {
     const customer = req.session.customer;
+    const products = [];
     if (customer) {
-      res.redirect('/customer/dashboard');
+      const cart = req.session.cart || {};
+
+      for (const productId in cart) {
+        if (cart.hasOwnProperty(productId)) {
+          const productDetails = productList.getProductById(Number(productId));
+    
+          if (productDetails) {
+            const { name, id, price } = productDetails;
+            const quantity = cart[productId];
+    
+            const product = {
+              name,
+              id,
+              price,
+              quantity,
+            };
+    
+            products.push(product);
+          }
+        }
+      }
+
+
+      res.render('customer/cart', { pageTitle: 'Your Cart', layout: 'layout', customer: customer, products: products, hasOrder: products.length });
+      console.log(cart);
     } else {
       res.redirect('/customer/login');
     }
-  }
+  })
 
   app.post('/addToCart', (req, res) => {
     const productId = req.body.productId;
     const cart = req.session.cart || {};
-  
+    
     // Check if the product is already in the cart
     if (cart[productId]) {
       // If so, increase the quantity by 1
@@ -76,6 +101,27 @@ module.exports = function (app) {
     // Update the session data with the modified cart
     req.session.cart = cart;
 
-    res.redirect('/customer/dashboard');
+    res.status(200).json({ message: 'POST request successful' });
+  });
+
+  app.post('/removeFromCart', (req, res) => {
+    const productId = req.body.productId;
+    const cart = req.session.cart || {};
+    
+    
+    if (cart[productId]) {
+      
+      delete cart[productId];
+    }
+  
+    // Update the session data with the modified cart
+    req.session.cart = cart;
+
+    res.status(200).json({ message: 'POST request successful' });
+  });
+
+  app.post('/place-order', (req, res) => {
+    const cart = req.session.cart;
+    
   });
 };
